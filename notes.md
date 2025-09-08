@@ -16,8 +16,8 @@ As part of `Deliverable ⓵ Development deployment: JWT Pizza`, start up the app
 | Logout                                              | logout.tsx                  | [Delete]/api/auth                  | DELETE FROM auth WHERE token=?             |
 | View About page                                     | about.tsx                   |    none               | none             |
 | View History page                                   | history.tsx                   |   none                |  none            |
-| Login as franchisee<br/>(f@jwt.com, pw: franchisee) |                    |                   |              |
-| View franchise<br/>(as franchisee)                  |                    |                   |              |
+| Login as franchisee<br/>(f@jwt.com, pw: franchisee) |  login.tsx                  |    [PUT]/api/auth               |   INSERT INTO auth (token, userId) VALUES (?, ?) ON DUPLICATE KEY UPDATE token=token           |
+| View franchise<br/>(as franchisee)                  | franchiseDashboard.tsx                  |   [GET]/api/franchise/${user.id}                |  SELECT u.id, u.name, u.email FROM userRole AS ur JOIN user AS u ON u.id=ur.userId WHERE ur.objectId=? AND ur.role='franchisee' SELECT s.id, s.name, COALESCE(SUM(oi.price), 0) AS totalRevenue FROM dinerOrder AS do JOIN orderItem AS oi ON do.id=oi.orderId RIGHT JOIN store AS s ON s.id=do.storeId WHERE s.franchiseId=? GROUP BY s.id           |
 | Create a store                                      |                    |                   |              |
 | Close a store                                       |                    |                   |              |
 | Login as admin<br/>(a@jwt.com, pw: admin)           |                    |                   |              |
